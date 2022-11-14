@@ -6,6 +6,3 @@ class Dog:
 
     def bark(self):
         print("Woof!")
-
-
-my_doy = Dog("Rex", "SuperDog")
