@@ -7,6 +7,21 @@ class Hero:
         self.starting_health = starting_health
         self.current_health = starting_health
 
+    def add_ability(self, ability):
+        pass
+
+    def attack():
+        pass
+
+    def defend(incoming_damage):
+        pass
+
+    def take_damage(self, damage):
+        pass
+
+    def is_alive():
+        pass
+
     def fight(self, opponent):
         """
         Current Hero will take turns fighhting the opponent hero passed in.
