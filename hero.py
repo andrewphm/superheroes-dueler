@@ -2,6 +2,7 @@ import random
 from ability import Ability
 from armor import Armor
 from weapon import Weapon
+import time
 
 
 class Hero:
@@ -38,7 +39,8 @@ class Hero:
     def take_damage(self, damage):
         block = self.defend()
         damage = damage - block
-        # FIX IF BLOCK IS LARGER THAN DAMAGE
+        if block < 0:
+            return
         self.current_health -= damage
 
     def is_alive(self):
@@ -49,15 +51,22 @@ class Hero:
 
     def fight(self, opponent):
         """
-        Current Hero will take turns fighhting the opponent hero passed in.
+        Current Hero will take turns fighting the opponent hero passed in.
         """
         winner = False
         while winner == False:
-            if len(self.abilities) == 0 and len(opponent.abilties) == 0:
+            if len(self.abilities) == 0 and len(opponent.abilities) == 0:
                 print("Draw")
-                winner == "Draw"
-            opponent.take_damage(self.attack())
-            self.take_damage(opponent.attack())
+                winner = "Draw"
+            while self.current_health > 0 and opponent.current_health > 0:
+                print("Begin battle: ")
+                print(f"Hero current health: {self.current_health}")
+                print(f"Opponent current health: {opponent.current_health}")
+                opponent.take_damage(self.attack())
+                self.take_damage(opponent.attack())
+                print(f"Hero new health: {self.current_health}")
+                print(f"Opponent new health: {opponent.current_health}")
+                time.sleep(5)
             if opponent.is_alive() == False:
                 self.add_kill(1)
                 opponent.add_death(1)
@@ -78,6 +87,12 @@ class Hero:
 
 if __name__ == "__main__":
     hero = Hero("Wonder Woman")
+    hero2 = Hero("Andrew")
     weapon = Weapon("Lasso of Truth", 90)
+    armor = Armor("Shield", 200)
+    hero.add_armor(armor)
     hero.add_weapon(weapon)
-    print(hero.attack())
+    hero2.add_weapon(weapon)
+    hero2.add_armor(armor)
+
+    hero.fight(hero2)
