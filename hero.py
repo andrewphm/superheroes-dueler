@@ -11,6 +11,8 @@ class Hero:
         self.abilities = list()
         self.armors = list()
         self.current_health = starting_health
+        self.deaths = 0
+        self.kills = 0
 
     def add_ability(self, ability):
         self.abilities.append(ability)
@@ -57,13 +59,21 @@ class Hero:
             opponent.take_damage(self.attack())
             self.take_damage(opponent.attack())
             if opponent.is_alive() == False:
+                self.add_kill(1)
+                opponent.add_death(1)
                 winner = self.name
             if self.is_alive() == False:
+                self.add_death(1)
+                opponent.add_kill(1)
                 winner = opponent.name
 
         print(f"{winner} won!")
 
-        # MUST FIX EDGE CASES
+    def add_kill(self, num_kills):
+        self.kills += num_kills
+
+    def add_death(self, num_deaths):
+        self.deaths += num_deaths
 
 
 if __name__ == "__main__":
